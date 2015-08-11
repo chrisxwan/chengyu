@@ -1,0 +1,22 @@
+{
+  "name": "chengyu",
+  "version": "0.0.1",
+  "description": "Learn 成语 daily",
+  "main": "./js/filter.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisxwan/chengyu.git"
+  },
+  "author": "Chris Wan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisxwan/chengyu/issues"
+  },
+  "homepage": "https://github.com/chrisxwan/chengyu#readme"
+}
