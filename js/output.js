@@ -27,8 +27,8 @@ var grab = function (dateString) {
 		var inner = $(outer).contents();
 		var simplified = '<p id="simplified">Simplified: ' + $($(inner).get(0)).text() + '</p>';
 		var traditional = '<p id="traditional">Traditional: ' + $($(inner).get(1)).text() + '</p>';
-		if(!traditional) {
-			simplified = traditional;
+		if(!$($(inner).get(1)).text()) {
+			traditional = simplified;
 		}
 		var pinyin = '<p id="pinyin">Pinyin: ' + $(inner).get(2).innerHTML + '</p>';	
 		var definition = '<p id="definition">Definition: ' + $(inner).get(3).innerHTML + '</p>';
