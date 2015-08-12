@@ -1,24 +1,24 @@
 chrome.storage.sync.get("date", function (result) {
+	console.log('grabbing date');
 	var today = new Date();
-	var year = today.getYear();
-	var month = today.getMonth():
+	var year = today.getFullYear();
+	var month = today.getMonth();
 	var date = today.getDate();
-	var dateString = year + '-' + month + '-';
-	if(result === undefined || (+ new Date(dateString) !== + new Date(result.date))) {
-		chrome.storage.sync.set({
-			dateString: dateString
-		});
-		var appendString = grab();
-		chrome.storage.sync.set({
-			appendString: appendString
+	var dateString = year + '-' + month + '-' + date;
+	if((+ new Date(dateString) !== + new Date(result.date))) {
+		console.log(dateString);
+		console.log(result.date);
+		grab(dateString);	
+	} else {
+		chrome.storage.sync.get("appendString", function (result) {
+			var appendString = result.appendString;
+			$('.text').append(appendString);
 		});
 	}
-	
 });
 
-var grab = function() {
+var grab = function (dateString) {
 	$.get('http://ntireader.org/topic.php?english=Idiom', function (data) {
-		console.log(data);
 		var dom = $.parseHTML(data);
 		var tr = $(dom).find('tr');
 		var num = tr.length;
@@ -33,6 +33,11 @@ var grab = function() {
 		var pinyin = '<p id="pinyin">Pinyin: ' + $(inner).get(2).innerHTML + '</p>';	
 		var definition = '<p id="definition">Definition: ' + $(inner).get(3).innerHTML + '</p>';
 		var appendString = simplified + traditional + pinyin + definition;
-		return appendString;
+		chrome.storage.sync.set({
+			date: dateString,
+			appendString: appendString
+		}, function() {
+			$('.text').append(appendString);
+		});
 	});
 }
