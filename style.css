@@ -51,3 +51,8 @@ p {
 .hide {
 	display: none;
 }
+
+.noImage {
+	text-align: center;
+	font-size: 20px;
+}

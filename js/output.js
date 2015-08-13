@@ -42,7 +42,7 @@ var grab = function (dateString) {
 			var imageURL = data["image"];
 			var imageString;
 			if(imageURL === null) {
-				imageString = '<div>No relevant image was found ):</div>';
+				imageString = '<img src="https://d30y9cdsu7xlg0.cloudfront.net/png/22717-200.png"/><div class="noImage">No relevant image was found ):</div>';
 			} else {
 				imageString = '<img src="' + imageURL + '"/>';
 			}
