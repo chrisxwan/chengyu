@@ -15,6 +15,7 @@
   "permissions": [
     "tabs",
     "storage",
-	"http://ntireader.org/topic.php?english=Idiom"
+	"http://ntireader.org/topic.php?english=Idiom",
+	"https://nounproject-bridge.herokuapp.com/*"
   ]
 }
