@@ -37,7 +37,7 @@ var grab = function (dateString) {
 		var searchString = $(inner).get(3).innerHTML.split(' ').join('+');
 		var search = $(inner).get(3).innerHTML;
 		search = search.replace('/', '');
-		$.get('https://nounproject-bridge.herokuapp.com/' + search, function (data) {
+		$.get('https://nounproject-bridge.herokuapp.com/top/' + search, function (data) {
 			console.log(data);
 			var imageURL = data["image"];
 			var imageString;
@@ -46,7 +46,7 @@ var grab = function (dateString) {
 			} else {
 				imageString = '<img src="' + imageURL + '"/>';
 			}
-			$('.imgae').append(imageString);
+			$('.image').append(imageString);
 			chrome.storage.sync.set({
 				date: dateString,
 				appendString: appendString,
