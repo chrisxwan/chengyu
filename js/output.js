@@ -10,9 +10,14 @@ chrome.storage.sync.get("date", function (result) {
 		console.log(result.date);
 		grab(dateString);	
 	} else {
-		chrome.storage.sync.get(["appendString", "imageString"], function (result) {
+		chrome.storage.sync.get(["appendString", "imageString", "search"], function (result) {
 			$('.text').append(result.appendString);
-			$('.image').append(result.imageString);
+			if(result.imageString === undefined) {
+				grabImage(result.search);
+			} else {
+				$('.gif').remove();
+				$('.image').append(result.imageString);
+			}
 		});
 	}
 });
@@ -37,21 +42,32 @@ var grab = function (dateString) {
 		var searchString = $(inner).get(3).innerHTML.split(' ').join('+');
 		var search = $(inner).get(3).innerHTML;
 		search = search.replace('/', '');
-		$.get('https://nounproject-bridge.herokuapp.com/top/' + search, function (data) {
-			console.log(data);
-			var imageURL = data["image"];
-			var imageString;
-			if(imageURL === null) {
-				imageString = '<img src="https://d30y9cdsu7xlg0.cloudfront.net/png/22717-200.png"/><div class="noImage">No relevant image was found ):</div>';
-			} else {
-				imageString = '<img src="' + imageURL + '"/>';
-			}
-			$('.image').append(imageString);
-			chrome.storage.sync.set({
-				date: dateString,
-				appendString: appendString,
-				imageString: imageString
-			});
+		chrome.storage.sync.set({
+			date: dateString,
+			appendString: appendString,
+			search: search
 		});
+		grabImage(search);
+		
 	});
 }
+
+var grabImage = function(search) {
+	$('.gif').css('display', 'block');
+	$.get('https://nounproject-bridge.herokuapp.com/top/' + search, function (data) {
+		console.log(data);
+		var imageURL = data["image"];
+		var imageString;
+		console.log(imageURL);
+		if(imageURL === null || imageURL === undefined) {
+			imageString = '<img class="picture" src="https://d30y9cdsu7xlg0.cloudfront.net/png/22717-200.png"/><div class="noImage">No relevant image was found ):</div>';
+		} else {
+			imageString = '<img class="picture" src="' + imageURL + '"/>';
+		}
+		$('.gif').fadeOut(700);
+		$('.image').append(imageString);
+		chrome.storage.sync.set({
+			imageString: imageString
+		});
+	});	
+};
